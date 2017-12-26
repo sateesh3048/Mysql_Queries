@@ -166,4 +166,62 @@ mysql> select DATE_FORMAT(@dt, "%m/%d/%y-%h:%i:%s");
 1 row in set (0.00 sec)
 
 
+MYSQL DATE ADD Function :-
+=======================
+
+
+select @dt,
+date_add(@dt, interval 1 second) as 'second',
+date_add(@dt, interval 1 minute) as "minute",
+date_add(@dt, interval 1 hour) as "Hour",
+date_add(@dt, interval 1 day) as "Day",
+date_add(@dt, interval 1 month) as "Month",
+date_add(@dt, interval 1 year) as "Year";
+
+mysql> select @dt, date_add(@dt, interval 1 second) as 'second', date_add(@dt, interval 1 minute) as "minute", date_add(@dt, interval 1 hour) as "Hour", date_add(@dt, interval 1 day) as "Day", date_add(@dt, interval 1 month) as "Month", date_add(@dt, interval 1 year) as "Year" \G;
+*************************** 1. row ***************************
+   @dt: 2017-12-26 12:57:50
+second: 2017-12-26 12:57:51
+minute: 2017-12-26 12:58:50
+  Hour: 2017-12-26 13:57:50
+   Day: 2017-12-27 12:57:50
+ Month: 2018-01-26 12:57:50
+  Year: 2018-12-26 12:57:50
+1 row in set (0.00 sec)
+
+
+MySQL DATE_SUB function :-
+========================
+
+mysql> select @dt,
+    -> date_sub(@dt, interval 1 second) as 'second',
+    -> date_sub(@dt, interval 1 minute) as "minute",
+    -> date_sub(@dt, interval 1 hour) as "Hour",
+    -> date_sub(@dt, interval 1 day) as "Day",
+    -> date_sub(@dt, interval 1 month) as "Month",
+    -> date_sub(@dt, interval 1 year) as "Year" \G;
+*************************** 1. row ***************************
+   @dt: 2017-12-26 12:57:50
+second: 2017-12-26 12:57:49
+minute: 2017-12-26 12:56:50
+  Hour: 2017-12-26 11:57:50
+   Day: 2017-12-25 12:57:50
+ Month: 2017-11-26 12:57:50
+  Year: 2016-12-26 12:57:50
+1 row in set (0.00 sec)
+
+MySQL DATE_DIFF function
+======================== :-
+
+To calculate a difference in days between two DATETIME values, you use the DATEDIFF function. 
+Notice that the DATEDIFF function only considers the date part of a DATETIME value in the calculation.
+
+mysql> select datediff(@dt, "2016-01-01") as dates_difference;
++------------------+
+| dates_difference |
++------------------+
+|              725 |
++------------------+
+1 row in set (0.00 sec)
+
 
