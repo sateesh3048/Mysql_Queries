@@ -1,4 +1,34 @@
 
+MySQL CHAR Data Type
+==================== :-
+
+The CHAR data type is a fixed-length character type in MySQL. We often declare the CHAR type with a length that specifies the 
+maximum number of characters that we want to store. For example, CHAR(20) can hold up to 20 characters.
+
+If the data that you want to store is a fixed size, you should use the CHAR data type. 
+You’ll get a `better performance in comparison with VARCHAR` in this case.
+
+Eg :-
+create table users(
+  id int(11) unsigned not null auto_increment primary key,
+  fname char(30) not null, # fname can store maximum 30 characters
+  lname char(30) not null, # lname can store maximum 30 characters
+  age int(11),
+  created_at timestamp default current_timestamp,
+  updated_at timestamp default current_timestamp on update current_timestamp
+)
+
+insert into users(fname, lname, age) values("sai", "k", 35);
+
+MySQL VARCHAR data type
+======================= :-
+To store variable length string we can use varchar. Since it is variable length char will give better performance than this.
+We can store upto 255 characters.
+
+Syntax :-
+
+title varchar(255) not null
+
 
 Enum Data Type :-
 =================
