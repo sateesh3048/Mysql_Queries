@@ -72,7 +72,98 @@ mysql> select * from ts_and_datetime; # Observe ts value changed after changing 
 +----+---------------------+---------------------+
 1 row in set (0.00 sec)
 
-  
+MySQL DATETIME functions
+========================
+using now() function I am taking current date and time.
+set @dt = now();
+
+mysql> select time(@dt)
+    -> ;
++-----------+
+| time(@dt) |
++-----------+
+| 12:57:50  |
++-----------+
+1 row in set (0.00 sec)
+
+Mysql Date() function :-
+========================
+We can use Date() function to get the date from date time.
+mysql> select date(@dt);
++------------+
+| date(@dt)  |
++------------+
+| 2017-12-26 |
++------------+
+1 row in set (0.00 sec)
+
+Mysql Time() function :-
+======================
+we can use time() function to get time from date time.
+mysql> select time(@dt);
++-----------+
+| time(@dt) |
++-----------+
+| 12:57:50  |
++-----------+
+1 row in set (0.00 sec)
+
+
+MySQL YEAR, QUARTER, MONTH, WEEK, DAY, HOUR, MINUTE and SECOND functions
+========================================================================= :-
+Year => To get the year from given date.
+Month => To get the month from given date.
+day => To get the day from given date.
+Hour => To get the hour from given date.
+Minute => To get the minute from given date.
+Second => To get the second from given date.
+Week => To get the week from given date.
+Quarter => To get the quarter from given date.
+
+mysql> select YEAR(@dt), MONTH(@dt), DAY(@dt), HOUR(@dt), MINUTE(@dt), SECOND(@dt), WEEK(@dt), Quarter(@dt);
++-----------+------------+----------+-----------+-------------+-------------+-----------+--------------+
+| YEAR(@dt) | MONTH(@dt) | DAY(@dt) | HOUR(@dt) | MINUTE(@dt) | SECOND(@dt) | WEEK(@dt) | Quarter(@dt) |
++-----------+------------+----------+-----------+-------------+-------------+-----------+--------------+
+|      2017 |         12 |       26 |        12 |          57 |          50 |        52 |            4 |
++-----------+------------+----------+-----------+-------------+-------------+-----------+--------------+
+1 row in set (0.00 sec)
+
+MySQL DATE_FORMAT function
+==========================
+
+We can use DATE_FORMAT() function to convert the given date into required format.
+
+mysql> select DATE_FORMAT(@dt, "%m/%d/%y");
++------------------------------+
+| DATE_FORMAT(@dt, "%m/%d/%y") |
++------------------------------+
+| 12/26/17                     |
++------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select DATE_FORMAT(@dt, "%m/%d/%Y");
++------------------------------+
+| DATE_FORMAT(@dt, "%m/%d/%Y") |
++------------------------------+
+| 12/26/2017                   |
++------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select DATE_FORMAT(@dt, "%W %M %Y");
++------------------------------+
+| DATE_FORMAT(@dt, "%W %M %Y") |
++------------------------------+
+| Tuesday December 2017        |
++------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select DATE_FORMAT(@dt, "%m/%d/%y-%h:%i:%s");
++---------------------------------------+
+| DATE_FORMAT(@dt, "%m/%d/%y-%h:%i:%s") |
++---------------------------------------+
+| 12/26/17-12:57:50                     |
++---------------------------------------+
+1 row in set (0.00 sec)
 
 
 
