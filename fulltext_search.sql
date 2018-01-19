@@ -166,6 +166,19 @@ This is why the full-text search in Boolean mode is suitable for experienced use
 
 To perform a full-text search in the Boolean mode, you use the IN BOOLEAN MODE modifier in the AGAINST  expression. 
 
+MySQL Boolean full-text search operators
+
+The following table illustrates the full-text search Boolean operators and their meanings:
+Operator	Description
++	Include, the word must be present.
+–	Exclude, the word must not be present.
+>	Include, and increase ranking value.
+<	Include, and decrease the ranking value.
+()	Group words into subexpressions (allowing them to be included, excluded, ranked, and so forth as a group).
+~	Negate a word’s ranking value.
+*	Wildcard at the end of the word.
+“”	Defines a phrase (as opposed to a list of individual words, the entire phrase is matched for inclusion or exclusion).
+
 => To get all the posts which contains awesome we can use below query
 
 mysql> select content from posts where match(content) against('awesome' in boolean mode);
