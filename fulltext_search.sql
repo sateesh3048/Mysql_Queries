@@ -158,3 +158,152 @@ There are some important points you should remember when using the full-text sea
     the keyword whose length is less than 4 e.g., car, cat, etc., you will not get any results.
     2)Stop words are ignored. MySQL defines a list of stop words in the MySQL source code distribution storage/myisam/ft_static.c
 
+"MySQL Boolean Full-Text Searches"
+================================ :-
+
+MySQL allows you to perform a full-text search based on very complex queries in the Boolean mode along with Boolean operators.
+This is why the full-text search in Boolean mode is suitable for experienced users.
+
+To perform a full-text search in the Boolean mode, you use the IN BOOLEAN MODE modifier in the AGAINST  expression. 
+
+=> To get all the posts which contains awesome we can use below query
+
+mysql> select content from posts where match(content) against('awesome' in boolean mode);
++---------------------------------+
+| content                         |
++---------------------------------+
+| rubyonrails is awesome          |
+| ruby awesome language           |
+| rails awesome language          |
+| WebApplication awesome language |
+| redis awesome language          |
+| Groovy awesome language         |
+| ruby awesome language           |
+| rails awesome Tutorial          |
+| WebApplication awesome Tutorial |
+| redis awesome Tutorial          |
+| Groovy awesome Tutorial         |
+| mysql awesome tutorial          |
+| mysql awesome                   |
+| tutorial is awesome             |
+| mysql awesome training          |
+| awesome mysql tutorial training |
+| rails awesome tutorial          |
+| awesome rails tutorial          |
++---------------------------------+
+18 rows in set (0.00 sec)
+
+=> To list all the posts which begin with 'aw' even in the middle of post we can use below query
+
+-> mysql> select content from posts where match(content) against('aw*' in boolean mode);
++---------------------------------+
+| content                         |
++---------------------------------+
+| rubyonrails is awesome          |
+| ruby awesome language           |
+| rails awesome language          |
+| WebApplication awesome language |
+| redis awesome language          |
+| Groovy awesome language         |
+| ruby awesome language           |
+| rails awesome Tutorial          |
+| WebApplication awesome Tutorial |
+| redis awesome Tutorial          |
+| Groovy awesome Tutorial         |
+| mysql awesome tutorial          |
+| mysql awesome                   |
+| tutorial is awesome             |
+| mysql awesome training          |
+| awesome mysql tutorial training |
+| rails awesome tutorial          |
+| awesome rails tutorial          |
++---------------------------------+
+18 rows in set (0.00 sec)
+
+=> To list all the posts which contains both mysql and training
+
+mysql> select content from posts where match(content) against('+mysql +training' in boolean mode);
++---------------------------------+
+| content                         |
++---------------------------------+
+| mysql awesome training          |
+| awesome mysql tutorial training |
+| mysql training is good          |
++---------------------------------+
+3 rows in set (0.00 sec)
+
+=> To list all the posts which contains mysql but not training
+
+mysql> select content from posts where match(content) against('+mysql -training' in boolean mode);
++-------------------------+
+| content                 |
++-------------------------+
+| mysql lang              |
+| Mysql  Tutorial         |
+| Mysql language Tutorial |
+| mysql awesome tutorial  |
+| mysql awesome           |
+| mysql tutorial is good  |
+| mysql is superb         |
++-------------------------+
+7 rows in set (0.00 sec)
+
+=>  To list all the posts which should contain mysql with training  or tutorial
+
+mysql> select content from posts where match(content) against('+mysql +(training tutorial)' in boolean mode);
++---------------------------------+
+| content                         |
++---------------------------------+
+| awesome mysql tutorial training |
+| mysql awesome training          |
+| mysql training is good          |
+| Mysql  Tutorial                 |
+| Mysql language Tutorial         |
+| mysql awesome tutorial          |
+| mysql tutorial is good          |
++---------------------------------+
+7 rows in set (0.00 sec)
+
+=> To list all the posts with mysql and training as high priority and tutorial as low priority
+
+mysql> select content from posts where match(content) against('+mysql +(>training <tutorial)' in boolean mode);
++---------------------------------+
+| content                         |
++---------------------------------+
+| mysql awesome training          |
+| mysql training is good          |
+| awesome mysql tutorial training |
+| Mysql  Tutorial                 |
+| Mysql language Tutorial         |
+| mysql awesome tutorial          |
+| mysql tutorial is good          |
++---------------------------------+
+7 rows in set (0.00 sec)
+
+=> To list all the posts which is having mysql but show the posts contained 'training' as low priority
+
+mysql> select content from posts where match(content) against('+mysql ~training' in boolean mode);
++---------------------------------+
+| content                         |
++---------------------------------+
+| mysql lang                      |
+| Mysql  Tutorial                 |
+| Mysql language Tutorial         |
+| mysql awesome tutorial          |
+| mysql awesome                   |
+| mysql awesome training          |
+| awesome mysql tutorial training |
+| mysql training is good          |
+| mysql tutorial is good          |
+| mysql is superb                 |
++---------------------------------+
+10 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
