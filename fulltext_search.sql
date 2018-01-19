@@ -312,6 +312,80 @@ mysql> select content from posts where match(content) against('+mysql ~training'
 +---------------------------------+
 10 rows in set (0.00 sec)
 
+Using MySQL Query Expansion
+========================== :-
+
+
+The query expansion is used to widen the search result of the full-text searches based on automatic relevance feedback (or blind query expansion). Technically, MySQL full-text search engine performs the following steps when the query expansion is used:
+
+    First, MySQL full-text search engine looks for all rows that match the search query.
+    Second, it checks all rows in the search result and finds the relevant words.
+    Third, it performs a search again based on the relevant words instead of the original keywords provided by the users.
+    
+  => if you fetch the rows with out query expansion then it will return few rows
+  
+  mysql> select * from posts where match(content) against('rails');
++----+-------------+-------------------------+
+| id | title       | content                 |
++----+-------------+-------------------------+
+|  4 | lang        | rails lang              |
+|  8 | language    | rails awesome language  |
+| 12 | tutorial    | Rails  Tutorial         |
+| 18 | language    | rails awesome Tutorial  |
+| 22 | tutorial    | Rails language Tutorial |
+| 35 | rails test  | rails awesome tutorial  |
+| 36 | rails test2 | awesome rails tutorial  |
+| 37 | rails test3 | good tutorial on rails  |
+| 38 | rails test2 | good rails tutorial     |
+| 39 | rails test3 | bad tutorial on rails   |
++----+-------------+-------------------------+
+10 rows in set (0.00 sec)
+
+
+=> With query expansion it will return lot of rows
+
+mysql> select * from posts where match(content) against('rails' with query expansion);
++----+-------------------------+----------------------------------+
+| id | title                   | content                          |
++----+-------------------------+----------------------------------+
+| 39 | rails test3             | bad tutorial on rails            |
+|  4 | lang                    | rails lang                       |
+| 37 | rails test3             | good tutorial on rails           |
+| 38 | rails test2             | good rails tutorial              |
+|  3 | language                | ruby lang                        |
+|  5 | language                | mysql lang                       |
+| 33 | mysql tutorial          | mysql tutorial is good           |
+| 32 | mysql training          | mysql training is good           |
+|  8 | language                | rails awesome language           |
+| 22 | tutorial                | Rails language Tutorial          |
+| 18 | language                | rails awesome Tutorial           |
+| 35 | rails test              | rails awesome tutorial           |
+| 36 | rails test2             | awesome rails tutorial           |
+|  7 | language                | ruby awesome language            |
+|  9 | language                | WebApplication awesome language  |
+| 10 | language                | redis awesome language           |
+| 11 | language                | Groovy awesome language          |
+| 17 | language                | ruby awesome language            |
+| 12 | tutorial                | Rails  Tutorial                  |
+| 23 | tutorial                | Ruby language Tutorial           |
+| 24 | tutorial                | WebApplication language Tutorial |
+| 25 | tutorial                | Mysql language Tutorial          |
+| 26 | tutorial                | Fulltext language Tutorial       |
+| 19 | language                | WebApplication awesome Tutorial  |
+| 20 | language                | redis awesome Tutorial           |
+| 21 | language                | Groovy awesome Tutorial          |
+| 27 | mysql1                  | mysql awesome tutorial           |
+| 29 | tutorial awesome        | tutorial is awesome              |
+| 31 | mysql tutorial training | awesome mysql tutorial training  |
+|  6 | desc                    | rubyonrails is awesome           |
+| 28 | mysql awesome           | mysql awesome                    |
+| 30 | training awesome        | mysql awesome training           |
+| 13 | tutorial                | Ruby  Tutorial                   |
+| 14 | tutorial                | WebApplication  Tutorial         |
+| 15 | tutorial                | Mysql  Tutorial                  |
+| 16 | tutorial                | Fulltext  Tutorial               |
++----+-------------------------+----------------------------------+
+36 rows in set (0.00 sec)
 
 
 
