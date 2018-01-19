@@ -190,11 +190,10 @@ MySQL Stored Procedure Variables
 =================================
 
 Declaring variables
+================== :-
 
 To declare a variable inside a stored procedure, you use the DECLARE  statement as follows:
-DECLARE variable_name datatype(size) DEFAULT default_value;
-1
-	
+
 DECLARE variable_name datatype(size) DEFAULT default_value;
 
 Let’s examine the statement above in more detail:
@@ -211,7 +210,6 @@ DECLARE x, y INT DEFAULT 0;
 
 We declared two integer variables  x and  y, and set their default values to zero.
 
-
 DECLARE total_count INT DEFAULT 0;
 SET total_count = 10;
 
@@ -225,7 +223,6 @@ DECLARE total_products INT DEFAULT 0
 SELECT COUNT(*) INTO total_products
 FROM products
 
-M products
 
 In the example above:
 
@@ -235,6 +232,33 @@ In the example above:
 Variables scope
 
 A variable has its own scope that defines its lifetime. If you declare a variable inside a stored procedure, it will be out of scope when the END statement of stored procedure reached.
+
+====================================================================================================================================
+
+MySQL Stored Procedure Parameters
+---------------------------------  :-
+
+
+Almost stored procedures that you develop require parameters. The parameters make the stored procedure more flexible and useful. 
+In MySQL, a parameter has one of three modes: IN,OUT, or INOUT.
+
+    1)IN – is the default mode. When you define an IN parameter in a stored procedure, the calling program has to pass an argument to 
+    the stored procedure. In addition, the value of an IN parameter is protected. It means that even the value of the IN parameter is 
+    changed inside the stored procedure, its original value is retained after the stored procedure ends. In other words, the stored 
+    procedure only works on the copy of the IN parameter.
+    
+    2)OUT – the value of an OUT parameter can be changed inside the stored procedure and its new value is passed back to the 
+    calling program. Notice that the stored procedure cannot access the initial value of the OUT parameter when it starts.
+    
+    3)INOUT – an INOUT  parameter is the combination of IN  and OUT  parameters. It means that the calling program may pass the 
+    argument, and the stored procedure can modify the INOUT parameter and pass the new value back to the calling program.
+
+The syntax of defining a parameter in the stored procedures is as follows:
+MODE param_name param_type(param_size)
+
+    The MODE could be IN , OUT,,or INOUT , depending on the purpose of the parameter in the stored procedure.
+    The param_name is the name of the parameter. The name of the parameter must follow the naming rules of the column name in MySQL.
+    Followed the parameter name is its data type and size. Like a variable, the data type of the parameter can be any valid MySQL data type.
 
 >> Creating stored proceudre which accepts in parameter as content word
 =======================================================================
@@ -273,3 +297,55 @@ mysql> call getPostsByContent('awesome');
 | awesome rails tutorial          | 0.11275633424520493 |
 +---------------------------------+---------------------+
 18 rows in set (0.00 sec)
+
+>> Creating a stored procedure which accpets in, inout parameter
+================================================================
+
+DELIMITER $$
+create procedure increment_counter(INOUT counter int, IN increment integer)
+  begin
+    set counter = counter + increment;
+  end $$
+DELIMITER ;
+mysql> set @counter = 5;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> 
+mysql> call increment_counter(@counter, 2);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select @counter;
++----------+
+| @counter |
++----------+
+|        7 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> 
+mysql> call increment_counter(@counter, 3);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select @counter;
++----------+
+| @counter |
++----------+
+|       10 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> call increment_counter(@counter, -10);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select @counter;
++----------+
+| @counter |
++----------+
+|        0 |
++----------+
+1 row in set (0.00 sec)
+
+
+
+
+
