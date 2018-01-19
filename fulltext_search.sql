@@ -27,11 +27,13 @@ CREATE TABLE posts (
 );
 
 > Defining FULLTEXT index for existing tables
+==============================================
 
 In case you already have existing tables and want to define full-text indexes, you can use the ALTER TABLE statement or CREATE INDEX 
 statement.
 
 > Defining FULLTEXT index using ALTER TABLE statement
+------------------------------------------------------
 
 The following syntax defines a FULLTEXT index using the ALTER TABLE statement:
 ALTER TABLE  table_name  
@@ -42,7 +44,7 @@ ALTER TABLE products
 ADD FULLTEXT(productDescription,productLine)
 
 Defining FULLTEXT index using CREATE INDEX statement
-=====================================================
+------------------------------------------------------
 
 You can also use the CREATE INDEX statement to create a FULLTEXT index for existing tables. See the following syntax:
 CREATE FULLTEXT INDEX index_name
@@ -52,7 +54,7 @@ The following statement creates a FULLTEXT index for the addressLine1 and addres
 CREATE FULLTEXT INDEX address
 ON offices(addressLine1,addressLine2)
 
-Removing full-text search columns
+*Removing full-text search columns*
 ================================= :-
 
 To remove a FULLTEXT index, you just delete the index using the ALTER TABLE … DROP INDEX statement. For example, the following statement removes the address FULLTEXT index in the offices table:
