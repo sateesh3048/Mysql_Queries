@@ -416,6 +416,52 @@ mysql> select @shipped as shipped, @resolved as resolved, @cancelled as cancelle
 
 ```
 
+## MySQL IF ELSEIF ELSE statement
+
+If you want to execute statements conditionally based on multiple expressions, you use the IF ELSEIF ELSE statement as follows:
+```mysql
+IF expression THEN
+   statements;
+ELSEIF elseif-expression THEN
+   elseif-statements;
+...
+ELSE
+   else-statements;
+END IF;
+```
+
+## Creating stored procedure using mysql if statements
+```mysql
+delimiter $$
+DROP PROCEDURE IF EXISTS getCustomerLevel$$
+CREATE PROCEDURE getCustomerLevel(
+  IN customerId int,
+  OUT customer_level varchar(40))
+  BEGIN
+    DECLARE credit_limit decimal(10,2) default 0;
+    select creditLimit into credit_limit  from 
+    customers where customerNumber = customerId;
+    IF credit_limit < 10000 THEN
+      SET customer_level = "Silver";
+    ELSEIF credit_limit >= 10000 AND credit_limit <= 50000 THEN
+      SET customer_level = "Gold";
+    ELSE
+      SET customer_level = "Diamond";
+    END IF;
+  END $$
+DELIMITER ;
+set @customer_level = 0; call getCustomerLevel(112, @customer_level);
+mysql> select @customer_level;
++-----------------+
+| @customer_level |
++-----------------+
+| Diamond         |
++-----------------+
+1 row in set (0.00 sec)
+
+```
+
+
 
 
 
