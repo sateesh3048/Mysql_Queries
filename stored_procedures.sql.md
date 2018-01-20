@@ -1,11 +1,11 @@
 
-Definition of stored procedures
+## Definition of stored procedures
 =============================== :-
 
 A stored procedure is a group of SQL statements stored inside the database catalog. A stored procedure can be 
 invoked by triggers, other stored procedures, and applications such as Ruby, Java, Python, PHP.
 
-MySQL stored procedures advantages
+## MySQL stored procedures advantages
 ================================= :-
 
     1) Typically stored procedures help increase the performance of the applications. Once created, stored procedures are 
@@ -23,7 +23,7 @@ MySQL stored procedures advantages
     4)Stored procedures are secure. The database administrator can grant appropriate permissions to applications that access 
     stored procedures in the database without giving any permissions on the underlying database tables.
 
-MySQL stored procedures disadvantages
+## MySQL stored procedures disadvantages
 ======================================
 
     1) If you use many stored procedures, the memory usage of every connection that is using those stored procedures will increase 
@@ -39,7 +39,7 @@ MySQL stored procedures disadvantages
     are often required a specialized skill set that not all application developers possess. This may lead to problems in both 
     application development and maintenance phases.
 
->> Creating simple stored procedure
+## Creating simple stored procedure
 ====================================
 
 ```mysql
@@ -68,9 +68,9 @@ MySQL stored procedures disadvantages
 
 
 
->> Calling store proceudre
+## Calling stored proceudre
 ===========================
-
+```mysql
 To call stored procedure we will use call method with stored procedure name.
 
 mysql> call getAllPosts();
@@ -118,20 +118,22 @@ mysql> call getAllPosts();
 | 39 | rails test3             | bad tutorial on rails            |
 +----+-------------------------+----------------------------------+
 39 rows in set (0.00 sec)
+```
 
-
->> Drop stored procuedure :-
+## Drop stored procuedure :-
 ===========================
 
+```mysql
 To drop existing stored procedure we will use drop method
 
 Eg: DROP PROCEDURE IF EXISTS getAllPosts;
+```
 
->> List all stored procedures in all databases:-
+### List all stored procedures in all databases:-
 ===============================================
 
 To list all stored procedures we will use
-
+```mysql
 >> show procedure status;
 
 Above command will list all stored procedures under all databases
@@ -148,10 +150,11 @@ Above command will list all stored procedures under all databases
 character_set_client: utf8
 collation_connection: utf8_general_ci
   Database Collation: latin1_swedish_ci
+ ```
 
-==>> To list all stored procedures  of specific database
+### To list all stored procedures  of specific database
 ======================================================
-
+```mysql
 >> show procedure status where db="dummy";
   mysql> show procedure status where db="dummy" \G;
 *************************** 1. row ***************************
@@ -167,10 +170,11 @@ character_set_client: utf8
 collation_connection: utf8_general_ci
   Database Collation: latin1_swedish_ci
 *************************** 2. row ***************************
+```
+### Show the body of the stored proecudure :-
+==========================================
 
-==>> Show the body of the stored proecudure :-
-  ==========================================
-  
+```mysql
   mysql> show create procedure debug_msg \G;
 *************************** 1. row ***************************
            Procedure: debug_msg
@@ -188,11 +192,12 @@ collation_connection: utf8_general_ci
 
 ERROR: 
 No query specified
+```
 
-MySQL Stored Procedure Variables
+## MySQL Stored Procedure Variables
 =================================
 
-Declaring variables
+#### Declaring variables
 ================== :-
 
 To declare a variable inside a stored procedure, you use the DECLARE  statement as follows:
@@ -232,20 +237,18 @@ In the example above:
     First, we declare a variable named total_products  and initialize its value to 0.
     Then, we used the SELECT INTO  statement to assign the total_products  variable the number of products that we selected from the products  table in the sample database.
 
-Variables scope
+**Variables scope**
 
 A variable has its own scope that defines its lifetime. If you declare a variable inside a stored procedure, it will be out of scope when the END statement of stored procedure reached.
 
-====================================================================================================================================
 
-MySQL Stored Procedure Parameters
----------------------------------  :-
-
+### MySQL Stored Procedure Parameters
+==================================
 
 Almost stored procedures that you develop require parameters. The parameters make the stored procedure more flexible and useful. 
-In MySQL, a parameter has one of three modes: IN,OUT, or INOUT.
+In MySQL, a parameter has one of three modes: **IN,OUT, or INOUT**.
 
-    1)IN – is the default mode. When you define an IN parameter in a stored procedure, the calling program has to pass an argument to 
+    1)#### IN – is the default mode. When you define an IN parameter in a stored procedure, the calling program has to pass an argument to 
     the stored procedure. In addition, the value of an IN parameter is protected. It means that even the value of the IN parameter is 
     changed inside the stored procedure, its original value is retained after the stored procedure ends. In other words, the stored 
     procedure only works on the copy of the IN parameter.
@@ -263,19 +266,19 @@ MODE param_name param_type(param_size)
     The param_name is the name of the parameter. The name of the parameter must follow the naming rules of the column name in MySQL.
     Followed the parameter name is its data type and size. Like a variable, the data type of the parameter can be any valid MySQL data type.
 
->> Creating stored proceudre which accepts in parameter as content word
+### Creating stored proceudre which accepts IN parameter as content word
 =======================================================================
 ```mysql
-        delimiter $$
-        drop procedure if exists getPostsByContent$$
-        create procedure getPostsByContent(in content_word varchar(255))
-          begin 
-            select content, match(content) against(concat_ws("",'+',content_word) in boolean mode) as rank from posts where  match(content) against(concat_ws("",'+',content_word) in boolean mode) order by rank desc;
-          end $$
-        delimiter ;
-
->> Calling stored procedure with given word
-
+delimiter $$
+drop procedure if exists getPostsByContent$$
+create procedure getPostsByContent(in content_word varchar(255))
+  begin 
+    select content, match(content) against(concat_ws("",'+',content_word) in boolean mode) as rank from posts where  match(content) against(concat_ws("",'+',content_word) in boolean mode) order by rank desc;
+  end $$
+delimiter ;
+```
+#### Calling stored procedure with given word
+```mysql
 mysql> call getPostsByContent('awesome');
 +---------------------------------+---------------------+
 | content                         | rank                |
@@ -302,55 +305,53 @@ mysql> call getPostsByContent('awesome');
 18 rows in set (0.00 sec)
 ```
 
->> Creating a stored procedure which accpets in, inout parameter
+### Creating a stored procedure which accpets in, inout parameter
 ================================================================
 ```mysql
+DELIMITER $$
+create procedure increment_counter(INOUT counter int, IN increment integer)
+  begin
+    set counter = counter + increment;
+  e```mysql
+nd $$
+DELIMITER ;
+mysql> set @counter = 5;
+Query OK, 0 rows affected (0.00 sec)
 
-    DELIMITER $$
-    creysql
-    te procedure increment_counter(INOUT counter int, IN increment integer)
-      begin
-        set counter = counter + increment;
-      e```mysql
-    nd $$
-    DELIMITER ;
-    mysql> set @counter = 5;
-    Query OK, 0 rows affected (0.00 sec)
+mysql> 
+mysql> call increment_counter(@counter, 2);
+Query OK, 0 rows affected (0.00 sec)
 
-    mysql> 
-    mysql> call increment_counter(@counter, 2);
-    Query OK, 0 rows affected (0.00 sec)
+mysql> select @counter;
++----------+
+| @counter |
++----------+
+|        7 |
++----------+
+1 row in set (0.00 sec)
 
-    mysql> select @counter;
-    +----------+
-    | @counter |
-    +----------+
-    |        7 |
-    +----------+
-    1 row in set (0.00 sec)
+mysql> 
+mysql> call increment_counter(@counter, 3);
+Query OK, 0 rows affected (0.00 sec)
 
-    mysql> 
-    mysql> call increment_counter(@counter, 3);
-    Query OK, 0 rows affected (0.00 sec)
+mysql> select @counter;
++----------+
+| @counter |
++----------+
+|       10 |
++----------+
+1 row in set (0.00 sec)
 
-    mysql> select @counter;
-    +----------+
-    | @counter |
-    +----------+
-    |       10 |
-    +----------+
-    1 row in set (0.00 sec)
+mysql> call increment_counter(@counter, -10);
+Query OK, 0 rows affected (0.00 sec)
 
-    mysql> call increment_counter(@counter, -10);
-    Query OK, 0 rows affected (0.00 sec)
-
-    mysql> select @counter;
-    +----------+
-    | @counter |
-    +----------+
-    |        0 |
-    +----------+
-    1 row in set (0.00 sec)
+mysql> select @counter;
++----------+
+| @counter |
++----------+
+|        0 |
++----------+
+1 row in set (0.00 sec)
 ```
 
  ### MySQL Stored Procedures That Return Multiple Values
