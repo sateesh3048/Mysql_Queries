@@ -1,5 +1,3 @@
-# Mysql_Queries
-
 
 ## Mysql Basics
 
