@@ -24,3 +24,42 @@ ELSE
 END IF;
 ```
 
+
+## Mysql Switch Statements 
+
+```mysql
+CASE  case_expression
+   WHEN when_expression_1 THEN commands
+   WHEN when_expression_2 THEN commands
+   ...
+   ELSE commands
+END CASE;
+```
+
+## Example code for switch case statements
+
+```mysql
+DELIMITER $$
+DROP PROCEDURE getCustomerShippingDetails $$
+CREATE PROCEDURE getCustomerShippingDetails(
+  IN CustId int,
+  OUT ShippingDaysInfo VARCHAR(80))
+  BEGIN
+    DECLARE country_info varchar(255);
+    select country into country_info from customers
+    where customerNumber = CustId;
+    CASE country_info
+    WHEN "USA" THEN
+      SET ShippingDaysInfo = "Five Days";
+    WHEN "Australia" THEN
+      SET ShippingDaysInfo = "Three Days";
+    WHEN "Singapore" THEN
+      SET ShippingDaysInfo = "One Day";
+    ELSE
+      SET ShippingDaysInfo = "No Shipping Details";
+    END CASE;
+  END $$
+DELIMITER ;
+set @shipping_info=""; call  getCustomerShippingDetails(471, @shipping_info);
+select @shipping_info;
+```
