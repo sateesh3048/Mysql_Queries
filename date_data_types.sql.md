@@ -8,8 +8,7 @@ displays the DATETIME value in the following format:
 ```mysql
   YYYY-MM-DD HH:MM:SS
 ```
-
-By default, DATETIME values range from **1000-01-01 00:00:00 to 9999-12-31 23:59:59 **
+By default, DATETIME values range from **1000-01-01 00:00:00 to 9999-12-31 23:59:59**
 
 ```mysql
 alter table categories add column begin_at datetime -- Using datetime datatype to store begin_at value.
@@ -40,9 +39,9 @@ create table categories(
 
 ## MySQL DATETIME vs. TIMESTAMP
 
-1. **Timestamp column can store dates between 1970 to 2038. where as datetime can store dates between 1000 to 9999. 
+1. **Timestamp column can store dates between 1970 to 2038. where as datetime can store dates between 1000 to 9999.** 
 
-2. **MySQL stores TIMESTAMP in UTC value. However, MySQL stores the DATETIME value as is without timezone information.
+2. **MySQL stores TIMESTAMP in UTC value. However, MySQL stores the DATETIME value as is without timezone information.**
 
 Note: If you change the timezone value then the display value of timestamp data will change so we need to be very careful 
 with timestamp fields when we moving server from one timezone to different time zone.
