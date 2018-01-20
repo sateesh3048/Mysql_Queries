@@ -18,7 +18,7 @@ SQL statements, the application has to send only name and parameters of the stor
 3) Stored procedures are **reusable and transparent to any applications**. Stored procedures expose the database interface to all 
 applications so that developers don’t have to develop functions that are already supported in stored procedures.
 
-4)**Stored procedures are secure**. The database administrator can grant appropriate permissions to applications that access 
+4) **Stored procedures are secure**. The database administrator can grant appropriate permissions to applications that access 
 stored procedures in the database without giving any permissions on the underlying database tables.
 
 ## MySQL stored procedures disadvantages
@@ -30,7 +30,7 @@ increase** because the database server is not well-designed for logical operatio
 2) It is difficult to **debug stored procedures**. Only a few database management systems allow you to debug stored procedures. 
 Unfortunately, MySQL does not provide facilities for debugging stored procedures.
 
-4) It is **not easy to develop and maintain stored procedures**. Developing and maintaining stored procedures 
+3) It is **not easy to develop and maintain stored procedures**. Developing and maintaining stored procedures 
 are often required a specialized skill set that not all application developers possess. This may lead to problems in both 
 application development and maintenance phases.
 
@@ -238,12 +238,12 @@ A variable has its own scope that defines its lifetime. If you declare a variabl
 Almost stored procedures that you develop require parameters. The parameters make the stored procedure more flexible and useful. 
 In MySQL, a parameter has one of three modes: **IN,OUT, or INOUT**.
 
-1) ***IN*** – *is the default mode*. When you define an IN parameter in a stored procedure, the calling program has to pass an argument to the stored procedure. In addition, the value of an IN parameter is protected. It means that even the value of the IN parameter is changed inside the stored procedure, its original value is retained after the stored procedure ends. In other words, the stored procedure only works on the copy of the IN parameter.
+1) **IN** – *is the default mode*. When you define an IN parameter in a stored procedure, the calling program has to pass an argument to the stored procedure. In addition, the value of an IN parameter is protected. It means that even the value of the IN parameter is changed inside the stored procedure, its original value is retained after the stored procedure ends. In other words, the stored procedure only works on the copy of the IN parameter.
 
-2)***OUT*** – the value of an OUT parameter can be changed inside the stored procedure and its new value is passed back to the 
+2) **OUT** – the value of an OUT parameter can be changed inside the stored procedure and its new value is passed back to the 
 calling program. Notice that the stored procedure cannot access the initial value of the OUT parameter when it starts.
 
-3)***INOUT*** – an INOUT  parameter is the combination of IN  and OUT  parameters. It means that the calling program may pass the 
+3) **INOUT** – an INOUT  parameter is the combination of IN  and OUT  parameters. It means that the calling program may pass the 
 argument, and the stored procedure can modify the INOUT parameter and pass the new value back to the calling program.
 
 The syntax of defining a parameter in the stored procedures is as follows:
