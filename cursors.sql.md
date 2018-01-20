@@ -12,7 +12,7 @@ To handle a result set inside a stored procedure, you use a cursor. A cursor all
 
 ## Working with MySQL cursor
 
-First, you have to declare a cursor by using the DECLARE statement:
+First, you have to **declare a cursor by using the DECLARE statement**:
 
 ```mysql
 DECLARE cursor_name CURSOR FOR SELECT_statement;
@@ -20,7 +20,7 @@ DECLARE cursor_name CURSOR FOR SELECT_statement;
 
 The cursor declaration must be after any variable declaration. If you declare a cursor before variables declaration, MySQL will issue an error. A cursor must always be associated with a SELECT statement.
 
-Next, you open the cursor by using the **OPEN statement**. The OPEN statement initializes the result set for the cursor, therefore, 
+Next, you **open the cursor by using the OPEN statement**. The OPEN statement initializes the result set for the cursor, therefore, 
 you must call the OPEN statement before fetching rows from the result set.
 ```mysql
 OPEN cursor_name;
@@ -33,14 +33,14 @@ FETCH cursor_name INTO variables list;
 
 After that, you can check to see if there is any row available before fetching it.
 
-Finally, you call the CLOSE statement to deactivate the cursor and release the memory associated with it as follows:
+Finally, you **call the CLOSE statement to deactivate the cursor and release the memory associated with it **as follows:
 ```mysql
 CLOSE cursor_name;
 ```
 
 When the cursor is no longer used, you should close it.
 
-When working with MySQL cursor, you must also declare a NOT FOUND handler to handle the situation when the cursor could not find any row. Because each time you call the FETCH statement, the cursor attempts to read the next row in the result set. When the cursor reaches the end of the result set, it will not be able to get the data, and a condition is raised. The handler is used to handle this condition.
+When working with MySQL cursor, you must **also declare a NOT FOUND handler to handle the situation when the cursor could not find any row**. Because each time you call the FETCH statement, the cursor attempts to read the next row in the result set. When the cursor reaches the end of the result set, it will not be able to get the data, and a condition is raised. The handler is used to handle this condition.
 
 To declare a NOT FOUND handler, you use the following syntax:
 ```mysql
