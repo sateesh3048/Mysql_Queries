@@ -42,13 +42,16 @@ MySQL stored procedures disadvantages
 >> Creating simple stored procedure
 ====================================
 
-DELIMITER $$
- drop procedure if exists getAllPosts$$
-create procedure getAllPosts()
-  BEGIN
-    select * from posts;
-  END $$
-DELIMITER ;
+```mysql
+    DELIMITER $$
+     drop procedure if exists getAllPosts$$
+    create procedure getAllPosts()
+      BEGIN
+        select * from posts;
+      END $$
+    DELIMITER ;
+```
+
 
     1)The first command is DELIMITER // , which is not related to the stored procedure syntax. The DELIMITER statement changes 
     the standard delimiter which is semicolon ( ; ) to another. In this case, the delimiter is changed from the semicolon( ; ) 
@@ -262,14 +265,14 @@ MODE param_name param_type(param_size)
 
 >> Creating stored proceudre which accepts in parameter as content word
 =======================================================================
-
-delimiter $$
-drop procedure if exists getPostsByContent$$
-create procedure getPostsByContent(in content_word varchar(255))
-  begin 
-    select content, match(content) against(concat_ws("",'+',content_word) in boolean mode) as rank from posts where  match(content) against(concat_ws("",'+',content_word) in boolean mode) order by rank desc;
-  end $$
-delimiter ;
+```mysql
+        delimiter $$
+        drop procedure if exists getPostsByContent$$
+        create procedure getPostsByContent(in content_word varchar(255))
+          begin 
+            select content, match(content) against(concat_ws("",'+',content_word) in boolean mode) as rank from posts where  match(content) against(concat_ws("",'+',content_word) in boolean mode) order by rank desc;
+          end $$
+        delimiter ;
 
 >> Calling stored procedure with given word
 
@@ -297,53 +300,58 @@ mysql> call getPostsByContent('awesome');
 | awesome rails tutorial          | 0.11275633424520493 |
 +---------------------------------+---------------------+
 18 rows in set (0.00 sec)
+```
 
 >> Creating a stored procedure which accpets in, inout parameter
 ================================================================
+```mysql
 
-DELIMITER $$
-create procedure increment_counter(INOUT counter int, IN increment integer)
-  begin
-    set counter = counter + increment;
-  end $$
-DELIMITER ;
-mysql> set @counter = 5;
-Query OK, 0 rows affected (0.00 sec)
+    DELIMITER $$
+    creysql
+    te procedure increment_counter(INOUT counter int, IN increment integer)
+      begin
+        set counter = counter + increment;
+      e```mysql
+    nd $$
+    DELIMITER ;
+    mysql> set @counter = 5;
+    Query OK, 0 rows affected (0.00 sec)
 
-mysql> 
-mysql> call increment_counter(@counter, 2);
-Query OK, 0 rows affected (0.00 sec)
+    mysql> 
+    mysql> call increment_counter(@counter, 2);
+    Query OK, 0 rows affected (0.00 sec)
 
-mysql> select @counter;
-+----------+
-| @counter |
-+----------+
-|        7 |
-+----------+
-1 row in set (0.00 sec)
+    mysql> select @counter;
+    +----------+
+    | @counter |
+    +----------+
+    |        7 |
+    +----------+
+    1 row in set (0.00 sec)
 
-mysql> 
-mysql> call increment_counter(@counter, 3);
-Query OK, 0 rows affected (0.00 sec)
+    mysql> 
+    mysql> call increment_counter(@counter, 3);
+    Query OK, 0 rows affected (0.00 sec)
 
-mysql> select @counter;
-+----------+
-| @counter |
-+----------+
-|       10 |
-+----------+
-1 row in set (0.00 sec)
+    mysql> select @counter;
+    +----------+
+    | @counter |
+    +----------+
+    |       10 |
+    +----------+
+    1 row in set (0.00 sec)
 
-mysql> call increment_counter(@counter, -10);
-Query OK, 0 rows affected (0.00 sec)
+    mysql> call increment_counter(@counter, -10);
+    Query OK, 0 rows affected (0.00 sec)
 
-mysql> select @counter;
-+----------+
-| @counter |
-+----------+
-|        0 |
-+----------+
-1 row in set (0.00 sec)
+    mysql> select @counter;
+    +----------+
+    | @counter |
+    +----------+
+    |        0 |
+    +----------+
+    1 row in set (0.00 sec)
+```
 
 MySQL Stored Procedures That Return Multiple Values
 =================================================== :-
@@ -352,38 +360,76 @@ To develop a stored procedure to return multiple values we need to use multiple 
 shipped orders count, resolved orders count, cancelled orders count for given customer using stored procedure.
 
 ```mysql
+    DELIMITER //
+    drop procedure if exists getOrderDetailsByCustomer //
+    create procedure getOrderDetailsByCustomer(
+    in cust_id int,
+    out shipped int,
+    out resolved int,
+    out cancelled int)
+      BEGIN
+        -- shipped
 
-DELIMITER //
-drop procedure if exists getOrderDetailsByCustomer //
-create procedure getOrderDetailsByCustomer(
-in cust_id int,
-out shipped int,
-out resolved int,
-out cancelled int)
-  BEGIN
-    -- shipped
-    
-    select count(*) into shipped from orders
-    where customerNumber = cust_id and status = "Shipped";
-    call dummy.debug_msg(1, concat("shipped count ", shipped));
-    
-    -- Resolved
-    select count(*) into resolved from orders
-    where customerNumber = cust_id and status = "Resolved";
-    call dummy.debug_msg(1, concat("resolved count ", resolved));
-    -- Cancelled
-    select count(*) into cancelled from orders
-    where customerNumber = cust_id and status = "Cancelled";
-    call dummy.debug_msg(1, concat("cancelled count ", cancelled));
-    
-  END //
-DELIMITER ;
+        select count(*) into shipped from orders
+        where customerNumber = cust_id and status = "Shipped";
+        call dummy.debug_msg(1, concat("shipped count ", shipped));
 
-set @cancelled = 0;set @resolved = 0;set @shipped = 0;call getOrderDetailsByCustomer(486, @shipped, @resolved, @cancelled);
+        -- Resolved
+        select count(*) into resolved from orders
+        where customerNumber = cust_id and status = "Resolved";
+        call dummy.debug_msg(1, concat("resolved count ", resolved));
+        -- Cancelled
+        select count(*) into cancelled from orders
+        where customerNumber = cust_id and status = "Cancelled";
+        call dummy.debug_msg(1, concat("cancelled count ", cancelled));
 
-select @shipped as shipped, @resolved as resolved, @cancelled as cancelled;
+      END //
+    DELIMITER ;
 
-```mysql
+    set @cancelled = 0;set @resolved = 0;set @shipped = 0;call getOrderDetailsByCustomer(486, @shipped, @resolved, @cancelled);
+
+    select @shipped as shipped, @resolved as resolved, @cancelled as cancelled;
+  mysql> set @cancelled = 0;set @resolved = 0;set @shipped = 0;call getOrderDetailsByCustomer(486, @shipped, @resolved, @cancelled);
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
++--------------------+
+| ** DEBUG:          |
++--------------------+
+| ** shipped count 3 |
++--------------------+
+1 row in set (0.00 sec)
+
++---------------------+
+| ** DEBUG:           |
++---------------------+
+| ** resolved count 0 |
++---------------------+
+1 row in set (0.00 sec)
+
++----------------------+
+| ** DEBUG:            |
++----------------------+
+| ** cancelled count 0 |
++----------------------+
+1 row in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> 
+mysql> select @shipped as shipped, @resolved as resolved, @cancelled as cancelled;
++---------+----------+-----------+
+| shipped | resolved | cancelled |
++---------+----------+-----------+
+|       3 |        0 |         0 |
++---------+----------+-----------+
+1 row in set (0.00 sec)
+
+
+```
 
 
 
