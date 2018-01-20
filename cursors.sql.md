@@ -4,9 +4,11 @@ To handle a result set inside a stored procedure, you use a cursor. A cursor all
 
 ## MySQL cursor is read-only, non-scrollable and asensitive.
 
-**Read only**: you cannot update data in the underlying table through the cursor.
-**Non-scrollable**: you can only fetch rows in the order determined by the SELECT statement. You cannot fetch rows in the reversed order. In addition, you cannot skip rows or jump to a specific row in the result set.
-**Asensitive*: there are two kinds of cursors: asensitive cursor and insensitive cursor. An asensitive cursor points to the actual data, whereas an insensitive cursor uses a temporary copy of the data. An asensitive cursor performs faster than an insensitive cursor because it does not have to make a temporary copy of data. However, any change that made to the data from other connections will affect the data that is being used by an asensitive cursor, therefore, it is safer if you don’t update the data that is being used by an asensitive cursor. MySQL cursor is asensitive.
+**Read only** : you cannot update data in the underlying table through the cursor.
+
+**Non-scrollable** : you can only fetch rows in the order determined by the SELECT statement. You cannot fetch rows in the reversed order. In addition, you cannot skip rows or jump to a specific row in the result set.
+
+**Asensitive** : there are two kinds of cursors: asensitive cursor and insensitive cursor. An asensitive cursor points to the actual data, whereas an insensitive cursor uses a temporary copy of the data. An asensitive cursor performs faster than an insensitive cursor because it does not have to make a temporary copy of data. However, any change that made to the data from other connections will affect the data that is being used by an asensitive cursor, therefore, it is safer if you don’t update the data that is being used by an asensitive cursor. MySQL cursor is asensitive.
 
 ## Working with MySQL cursor
 
