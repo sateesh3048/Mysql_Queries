@@ -2,11 +2,11 @@
 
 # Datetime Datatype:-
 
-You use MySQL DATETIME to store a value that contains both date and time. When you query data from a DATETIME column, MySQL 
+We can use **MySQL DATETIME to store a value that contains both date and time**. When you query data from a DATETIME column, MySQL 
 displays the DATETIME value in the following format:
-
-"YYYY-MM-DD HH:MM:SS"
-
+```mysql
+YYYY-MM-DD HH:MM:SS
+```
 By default, DATETIME values range from ** 1000-01-01 00:00:00 to 9999-12-31 23:59:59 **
 
 ```mysql
@@ -38,9 +38,9 @@ create table categories(
 
 ## MySQL DATETIME vs. TIMESTAMP
 
-1. Timestamp column can store dates between 1970 to 2038. where as datetime can store dates between 1000 to 9999. 
+1. **Timestamp column can store dates between 1970 to 2038. where as datetime can store dates between 1000 to 9999. 
 
-2. MySQL stores TIMESTAMP in UTC value. However, MySQL stores the DATETIME value as is without timezone information.
+2. **MySQL stores TIMESTAMP in UTC value. However, MySQL stores the DATETIME value as is without timezone information.
 
 Note: If you change the timezone value then the display value of timestamp data will change so we need to be very careful 
 with timestamp fields when we moving server from one timezone to different time zone.
@@ -116,14 +116,14 @@ mysql> select time(@dt);
 
 ## MySQL YEAR, QUARTER, MONTH, WEEK, DAY, HOUR, MINUTE and SECOND functions
 
-Year => To get the year from given date.
-Month => To get the month from given date.
-day => To get the day from given date.
-Hour => To get the hour from given date.
-Minute => To get the minute from given date.
-Second => To get the second from given date.
-Week => To get the week from given date.
-Quarter => To get the quarter from given date.
+* **Year** => To get the year from given date.
+* **Month** => To get the month from given date.
+* **day** => To get the day from given date.
+* **Hour** => To get the hour from given date.
+* **Minute** => To get the minute from given date.
+* **Second** => To get the second from given date.
+* **Week** => To get the week from given date.
+* **Quarter** => To get the quarter from given date.
 
 ```mysql
 mysql> select YEAR(@dt), MONTH(@dt), DAY(@dt), HOUR(@dt), MINUTE(@dt), SECOND(@dt), WEEK(@dt), Quarter(@dt);
