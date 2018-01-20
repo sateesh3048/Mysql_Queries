@@ -78,6 +78,49 @@ mysql> show full tables;
 | employees               | BASE TABLE |
 The table_type column in the result set specifies which object is view and which object is a table (base table).
 ```
+## Showing view definition
+The following is the syntax of the SHOW CREATE VIEW statement:
+```mysql
+SHOW CREATE VIEW [database_name].[view_ name];
+```
+To display the definition of a view, you need to specify its name after the SHOW CREATE VIEW  clause.
+
+```mysql
+mysql> show create view classicmodels.vps \G;
+*************************** 1. row ***************************
+                View: vps
+         Create View: CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vps` AS select `employees`.`lastName` AS `lastName`,`employees`.`firstName` AS `firstName`,`employees`.`email` AS `email`,`employees`.`jobTitle` AS `jobTitle` from `employees` where (`employees`.`jobTitle` like '%vp%')
+character_set_client: utf8
+collation_connection: utf8_general_ci
+1 row in set (0.00 sec)
+
+ERROR: 
+No query specified
+```
+
+## Modifying views
+
+MySQL provides two statements that allow you to modify an existing view: **ALTER VIEW and CREATE OR REPLACE VIEW**
+Modifying views using ALTER VIEW statement
+Once a view is created, you can modify it using the ALTER VIEW statement.
+
+The syntax of the ALTER VIEW statement is similar to the CREATE VIEW statement except that the CREATE keyword is replaced by the ALTER keyword.
+
+```mysql
+ALTER
+ [ALGORITHM =  {MERGE | TEMPTABLE | UNDEFINED}]
+  VIEW [database_name].  [view_name]
+   AS 
+ [SELECT  statement]
+
+ALTER VIEW EMPINFO
+SELECT 
+        firstName, lastName, extension, email
+    FROM
+        employees;
+
+```
+
 ## Fetch data from view
 
 ```mysql
@@ -88,6 +131,18 @@ The table_type column in the result set specifies which object is view and which
 |       10165 | 67392.85 |
 |       10287 | 61402.00 |
 |       10310 | 61234.67 |
+
+```
+
+## Removing views
+
+Once a view created, you can remove it using the **DROP VIEW statement**. The following illustrates the syntax of the DROP VIEW statement:
+
+```mysql
+DROP VIEW [IF EXISTS] [database_name].[view_name]
+
+Example :-
+DROP VIEW IF EXISTS organization;
 
 ```
 
