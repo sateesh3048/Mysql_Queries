@@ -61,5 +61,11 @@ CREATE PROCEDURE getCustomerShippingDetails(
   END $$
 DELIMITER ;
 set @shipping_info=""; call  getCustomerShippingDetails(471, @shipping_info);
-select @shipping_info;
+mysql> select @shipping_info;
++----------------+
+| @shipping_info |
++----------------+
+| Three Days     |
++----------------+
+1 row in set (0.00 sec)
 ```
