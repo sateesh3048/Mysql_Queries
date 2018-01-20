@@ -161,6 +161,29 @@ collation_connection: utf8_general_ci
   Database Collation: latin1_swedish_ci
 *************************** 2. row ***************************
 ```
+
+## List all stored procedures with the given name like 
+
+```mysql
+mysql> show procedure status where name like "%debug%" \G;
+*************************** 1. row ***************************
+                  Db: dummy
+                Name: debug_msg
+                Type: PROCEDURE
+             Definer: root@localhost
+            Modified: 2018-01-19 17:21:45
+             Created: 2018-01-19 17:21:45
+       Security_type: DEFINER
+             Comment: 
+character_set_client: utf8
+collation_connection: utf8_general_ci
+  Database Collation: latin1_swedish_ci
+1 row in set (0.00 sec)
+
+ERROR: 
+No query specified
+```
+
 ## Show the body of the stored proecudure :-
 
 ```mysql
