@@ -4,10 +4,12 @@
 
 We can use **MySQL DATETIME to store a value that contains both date and time**. When you query data from a DATETIME column, MySQL 
 displays the DATETIME value in the following format:
+
 ```mysql
-YYYY-MM-DD HH:MM:SS
+  YYYY-MM-DD HH:MM:SS
 ```
-By default, DATETIME values range from ** 1000-01-01 00:00:00 to 9999-12-31 23:59:59 **
+
+By default, DATETIME values range from **1000-01-01 00:00:00 to 9999-12-31 23:59:59 **
 
 ```mysql
 alter table categories add column begin_at datetime -- Using datetime datatype to store begin_at value.
@@ -19,7 +21,7 @@ The MySQL TIMESTAMP is a **temporal data type that holds the combination of date
 YYYY-MM-DD HH:MM:SS which is fixed at 19 characters.
 
 
-The TIMESTAMP value has a range from ** '1970-01-01 00:00:01' UTC to '2038-01-19 03:14:07' UTC. **
+The TIMESTAMP value has a range from **'1970-01-01 00:00:01' UTC to '2038-01-19 03:14:07' UTC.**
 
 When you insert a TIMESTAMP value into a table, MySQL converts it from your connection’s time zone to UTC for storage. When you 
 query a TIMESTAMP value, MySQL converts the UTC value back to your connection’s time zone.
