@@ -65,6 +65,13 @@ create procedure SumOfNumbers(
 DELIMITER ;
 
 set @sum = 0; call SumOfNumbers(12, @sum);
-select @sum;
+mysql> select @sum;
++------+
+| @sum |
++------+
+|   55 |
++------+
+1 row in set (0.00 sec)
+
 ```
 
