@@ -11,3 +11,6 @@
 * Click on  [FullText Search](https://github.com/sateesh3048/Mysql_Queries/blob/master/fulltext_search.sql) to learn about mysql fulltext search basics.
  
 * Click on [Stored Procedures](https://github.com/sateesh3048/Mysql_Queries/blob/master/stored_procedures.sql.md) to learn about mysql stored procedures.
+
+* Click on [Cursors](https://github.com/sateesh3048/Mysql_Queries/blob/master/cursors.sql.md) to learn about mysql cursor basics.
+
