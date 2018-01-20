@@ -13,5 +13,6 @@
 * Click on [Cursors](https://github.com/sateesh3048/Mysql_Queries/blob/master/cursors.sql.md) to learn about mysql cursor basics.
 
 * Click on [Functions](https://github.com/sateesh3048/Mysql_Queries/blob/master/stored_functions.sql.md) to learn about mysql function creation basics.
+* Click on [Views ](https://github.com/sateesh3048/Mysql_Queries/blob/master/Views.sql.md) to learn about mysql view creation basics.
 
 
