@@ -351,7 +351,7 @@ MySQL Stored Procedures That Return Multiple Values
 To develop a stored procedure to return multiple values we need to use multiple out statements. In the below program we are returning
 shipped orders count, resolved orders count, cancelled orders count for given customer using stored procedure.
 
-
+```mysql
 
 DELIMITER //
 drop procedure if exists getOrderDetailsByCustomer //
@@ -382,6 +382,8 @@ DELIMITER ;
 set @cancelled = 0;set @resolved = 0;set @shipped = 0;call getOrderDetailsByCustomer(486, @shipped, @resolved, @cancelled);
 
 select @shipped as shipped, @resolved as resolved, @cancelled as cancelled;
+
+```mysql
 
 
 
