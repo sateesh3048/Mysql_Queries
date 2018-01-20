@@ -353,38 +353,39 @@ mysql> call getPostsByContent('awesome');
     1 row in set (0.00 sec)
 ```
 
-MySQL Stored Procedures That Return Multiple Values
-=================================================== :-
+ ### MySQL Stored Procedures That Return Multiple Values
+ =======================================================
+   
 
 To develop a stored procedure to return multiple values we need to use multiple out statements. In the below program we are returning
 shipped orders count, resolved orders count, cancelled orders count for given customer using stored procedure.
 
 ```mysql
-    DELIMITER //
-    drop procedure if exists getOrderDetailsByCustomer //
-    create procedure getOrderDetailsByCustomer(
-    in cust_id int,
-    out shipped int,
-    out resolved int,
-    out cancelled int)
-      BEGIN
-        -- shipped
+DELIMITER //
+drop procedure if exists getOrderDetailsByCustomer //
+create procedure getOrderDetailsByCustomer(
+in cust_id int,
+out shipped int,
+out resolved int,
+out cancelled int)
+  BEGIN
+    -- shipped
 
-        select count(*) into shipped from orders
-        where customerNumber = cust_id and status = "Shipped";
-        call dummy.debug_msg(1, concat("shipped count ", shipped));
+    select count(*) into shipped from orders
+    where customerNumber = cust_id and status = "Shipped";
+    call dummy.debug_msg(1, concat("shipped count ", shipped));
 
-        -- Resolved
-        select count(*) into resolved from orders
-        where customerNumber = cust_id and status = "Resolved";
-        call dummy.debug_msg(1, concat("resolved count ", resolved));
-        -- Cancelled
-        select count(*) into cancelled from orders
-        where customerNumber = cust_id and status = "Cancelled";
-        call dummy.debug_msg(1, concat("cancelled count ", cancelled));
+    -- Resolved
+    select count(*) into resolved from orders
+    where customerNumber = cust_id and status = "Resolved";
+    call dummy.debug_msg(1, concat("resolved count ", resolved));
+    -- Cancelled
+    select count(*) into cancelled from orders
+    where customerNumber = cust_id and status = "Cancelled";
+    call dummy.debug_msg(1, concat("cancelled count ", cancelled));
 
-      END //
-    DELIMITER ;
+  END //
+DELIMITER ;
 
     set @cancelled = 0;set @resolved = 0;set @shipped = 0;call getOrderDetailsByCustomer(486, @shipped, @resolved, @cancelled);
 
