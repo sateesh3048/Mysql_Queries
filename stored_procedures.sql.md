@@ -65,7 +65,6 @@ invoked by triggers, other stored procedures, and applications such as Ruby, Jav
 
 
 ## Calling stored proceudre
-===========================
 ```mysql
 To call stored procedure we will use call method with stored procedure name.
 
@@ -117,7 +116,6 @@ mysql> call getAllPosts();
 ```
 
 ## Drop stored procuedure :-
-===========================
 
 ```mysql
 To drop existing stored procedure we will use drop method
@@ -125,8 +123,7 @@ To drop existing stored procedure we will use drop method
 Eg: DROP PROCEDURE IF EXISTS getAllPosts;
 ```
 
-### List all stored procedures in all databases:-
-===============================================
+## List all stored procedures in all databases:-
 
 To list all stored procedures we will use
 ```mysql
@@ -148,8 +145,7 @@ collation_connection: utf8_general_ci
   Database Collation: latin1_swedish_ci
  ```
 
-### To list all stored procedures  of specific database
-======================================================
+## To list all stored procedures  of specific database
 ```mysql
 >> show procedure status where db="dummy";
   mysql> show procedure status where db="dummy" \G;
@@ -167,8 +163,7 @@ collation_connection: utf8_general_ci
   Database Collation: latin1_swedish_ci
 *************************** 2. row ***************************
 ```
-### Show the body of the stored proecudure :-
-==========================================
+## Show the body of the stored proecudure :-
 
 ```mysql
   mysql> show create procedure debug_msg \G;
@@ -191,7 +186,6 @@ No query specified
 ```
 
 ## MySQL Stored Procedure Variables
-=================================
 
 #### Declaring variables
 ================== :-
@@ -238,7 +232,7 @@ In the example above:
 A variable has its own scope that defines its lifetime. If you declare a variable inside a stored procedure, it will be out of scope when the END statement of stored procedure reached.
 
 
-### MySQL Stored Procedure Parameters
+## MySQL Stored Procedure Parameters
 ==================================
 
 Almost stored procedures that you develop require parameters. The parameters make the stored procedure more flexible and useful. 
@@ -262,8 +256,7 @@ MODE param_name param_type(param_size)
     The param_name is the name of the parameter. The name of the parameter must follow the naming rules of the column name in MySQL.
     Followed the parameter name is its data type and size. Like a variable, the data type of the parameter can be any valid MySQL data type.
 
-### Creating stored proceudre which accepts IN parameter as content word
-=======================================================================
+## Creating stored proceudre which accepts IN parameter as content word
 ```mysql
 delimiter $$
 drop procedure if exists getPostsByContent$$
@@ -273,7 +266,7 @@ create procedure getPostsByContent(in content_word varchar(255))
   end $$
 delimiter ;
 ```
-#### Calling stored procedure with given word
+## Calling stored procedure with given word
 ```mysql
 mysql> call getPostsByContent('awesome');
 +---------------------------------+---------------------+
@@ -301,8 +294,7 @@ mysql> call getPostsByContent('awesome');
 18 rows in set (0.00 sec)
 ```
 
-### Creating a stored procedure which accpets in, inout parameter
-================================================================
+## Creating a stored procedure which accpets in, inout parameter
 ```mysql
 DELIMITER $$
 create procedure increment_counter(INOUT counter int, IN increment integer)
@@ -350,8 +342,7 @@ mysql> select @counter;
 1 row in set (0.00 sec)
 ```
 
- ### MySQL Stored Procedures That Return Multiple Values
- =======================================================
+ ## MySQL Stored Procedures That Return Multiple Values
    
 
 To develop a stored procedure to return multiple values we need to use multiple out statements. In the below program we are returning
