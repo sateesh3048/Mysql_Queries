@@ -91,7 +91,7 @@ The table_type column in the result set specifies which object is view and which
 
 ```
 
-##Creating a view based on another view
+## Creating a view based on another view
 MySQL allows you to **create a view based on another view**. For example, you can create a view called big sales order based on the SalesPerOrder view to show every sales order whose total is greater than 60,000 as follows:
 ```mysql
 create view TopCustomerOrders AS
