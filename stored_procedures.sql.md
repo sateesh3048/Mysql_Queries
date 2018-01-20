@@ -6,7 +6,7 @@ invoked by triggers, other stored procedures, and applications such as Ruby, Jav
 
 ## MySQL stored procedures advantages
 
-1) Typically stored procedures help increase the performance of the applications*. Once created, stored procedures are 
+1) Typically stored procedures help **increase the performance of the applications**. Once created, stored procedures are 
 compiled and stored in the database. However, MySQL implements the stored procedures slightly different. MySQL stored procedures 
 are compiled on demand. After compiling a stored procedure, MySQL puts it into a cache. And MySQL maintains its own stored 
 procedure cache for every single connection. If an application uses a stored procedure multiple times in a 
@@ -15,26 +15,24 @@ single connection, the compiled version is used, otherwise, the stored procedure
 2) Stored procedures help **reduce the traffic between application and database server because instead of sending multiple lengthy 
 SQL statements, the application has to send only name and parameters of the stored procedure**.
 
-3) Stored procedures are reusable and transparent to any applications. Stored procedures expose the database interface to all 
+3) Stored procedures are **reusable and transparent to any applications**. Stored procedures expose the database interface to all 
 applications so that developers don’t have to develop functions that are already supported in stored procedures.
 
-4)Stored procedures are secure. The database administrator can grant appropriate permissions to applications that access 
+4)**Stored procedures are secure**. The database administrator can grant appropriate permissions to applications that access 
 stored procedures in the database without giving any permissions on the underlying database tables.
 
 ## MySQL stored procedures disadvantages
 
-    1) If you use many stored procedures, the memory usage of every connection that is using those stored procedures will increase 
-    substantially. In addition, if you overuse a large number of logical operations inside store procedures, the CPU usage will also 
-    increase because the database server is not well-designed for logical operations.
-    
-    2) Stored procedure’s constructs are not designed for developing complex and flexible business logic.
-    
-    3) It is difficult to debug stored procedures. Only a few database management systems allow you to debug stored procedures. 
-    Unfortunately, MySQL does not provide facilities for debugging stored procedures.
-    
-    4) It is not easy to develop and maintain stored procedures. Developing and maintaining stored procedures 
-    are often required a specialized skill set that not all application developers possess. This may lead to problems in both 
-    application development and maintenance phases.
+1) If you use many stored procedures, **the memory usage of every connection that is using those stored procedures will increase 
+substantially**. In addition, if you **overuse a large number of logical operations inside store procedures, the CPU usage will also 
+increase** because the database server is not well-designed for logical operations.
+
+2) It is difficult to **debug stored procedures**. Only a few database management systems allow you to debug stored procedures. 
+Unfortunately, MySQL does not provide facilities for debugging stored procedures.
+
+4) It is **not easy to develop and maintain stored procedures**. Developing and maintaining stored procedures 
+are often required a specialized skill set that not all application developers possess. This may lead to problems in both 
+application development and maintenance phases.
 
 ## Creating simple stored procedure
 
@@ -49,18 +47,18 @@ stored procedures in the database without giving any permissions on the underlyi
 ```
 
 
-    1)The first command is DELIMITER // , which is not related to the stored procedure syntax. The DELIMITER statement changes 
-    the standard delimiter which is semicolon ( ; ) to another. In this case, the delimiter is changed from the semicolon( ; ) 
-    to double-slashes // Why do we have to change the delimiter? Because we want to pass the stored procedure to the server as a 
-    whole rather than letting mysql tool interpret each statement at a time.  Following the END keyword, we use the delimiter //  
-    to indicate the end of the stored procedure. The last command ( DELIMITER; ) changes the delimiter back to the semicolon (;).
-    
-    2) We use the "CREATE PROCEDURE"  statement to create a new stored procedure. We specify the name of stored procedure after the 
-    CREATE PROCEDURE  statement. In this case, the name of the stored procedure is GetAllPosts . We put the parentheses after the 
-    name of the stored procedure.
-    
-    3)The section between BEGIN and END  is called the body of the stored procedure. You put the declarative SQL statements in the 
-    body to handle business logic. In this stored procedure, we use a simple SELECT statement to query data from the posts table.
+1)The first command is DELIMITER // , which is not related to the stored procedure syntax. The DELIMITER statement changes 
+the standard delimiter which is semicolon ( ; ) to another. In this case, the delimiter is changed from the semicolon( ; ) 
+to double-slashes // Why do we have to change the delimiter? Because we want to pass the stored procedure to the server as a 
+whole rather than letting mysql tool interpret each statement at a time.  Following the END keyword, we use the delimiter //  
+to indicate the end of the stored procedure. The last command ( DELIMITER; ) changes the delimiter back to the semicolon (;).
+
+2) We use the **CREATE PROCEDURE  statement to create a new stored procedure**. We specify the name of stored procedure after the 
+CREATE PROCEDURE  statement. In this case, the name of the stored procedure is GetAllPosts . We put the parentheses after the 
+name of the stored procedure.
+
+3)**The section between BEGIN and END  is called the body of the stored procedure**. You put the declarative SQL statements in the 
+body to handle business logic. In this stored procedure, we use a simple SELECT statement to query data from the posts table.
 
 
 
@@ -190,42 +188,44 @@ No query specified
 #### Declaring variables
 ================== :-
 
-To declare a variable inside a stored procedure, you use the DECLARE  statement as follows:
+To declare a variable inside a stored procedure, you use the **DECLARE**  statement as follows:
 
+```mysql
 DECLARE variable_name datatype(size) DEFAULT default_value;
+```
 
 Let’s examine the statement above in more detail:
 
-    1)First, you specify the variable name after the DECLARE keyword. The variable name must follow the naming rules of MySQL table column names.
-    2)Second, you specify the data type of the variable and its size. A variable can have any MySQL data types such as INT, VARCHAR , and DATETIME.
-    3) Third, when you declare a variable, its initial value is NULL. You can assign the variable a default value using the DEFAULTkeyword.
+1)First, **you specify the variable name after the DECLARE keyword**. The variable name must follow the naming rules of MySQL table column names.
+2)Second, **you specify the data type of the variable and its size**. A variable can have any MySQL data types such as INT, VARCHAR , and DATETIME.
+3) Third, when you declare a variable, its initial value is NULL. **You can assign the variable a default value using the DEFAULTkeyword**.
 
 For example, we can declare a variable named   total_sale with the data type INT and default value 0  as follows:
+```mysql
 DECLARE total_sale INT DEFAULT 0;
+```
 
 MySQL allows you to declare two or more variables that share the same data type using a single DECLARE statement as following:
 DECLARE x, y INT DEFAULT 0;
 
 We declared two integer variables  x and  y, and set their default values to zero.
-
+```mysql
 DECLARE total_count INT DEFAULT 0;
 SET total_count = 10;
+```
 
 The value of the total_count variable is 10  after the assignment.
 
 Besides the SET  statement, you can use the SELECT INTO  statement to assign the result of a query, which returns a scalar value, to 
 a variable. See the following example:
-
+```mysql
 DECLARE total_products INT DEFAULT 0
- 
 SELECT COUNT(*) INTO total_products
 FROM products
-
-
+```
 In the example above:
-
     First, we declare a variable named total_products  and initialize its value to 0.
-    Then, we used the SELECT INTO  statement to assign the total_products  variable the number of products that we selected from the products  table in the sample database.
+    Then, we used the **SELECT INTO  statement to assign the total_products  variable the number of products that we selected** from the products  table in the sample database.
 
 **Variables scope**
 
@@ -238,23 +238,22 @@ A variable has its own scope that defines its lifetime. If you declare a variabl
 Almost stored procedures that you develop require parameters. The parameters make the stored procedure more flexible and useful. 
 In MySQL, a parameter has one of three modes: **IN,OUT, or INOUT**.
 
-    1)#### IN – is the default mode. When you define an IN parameter in a stored procedure, the calling program has to pass an argument to 
-    the stored procedure. In addition, the value of an IN parameter is protected. It means that even the value of the IN parameter is 
-    changed inside the stored procedure, its original value is retained after the stored procedure ends. In other words, the stored 
-    procedure only works on the copy of the IN parameter.
-    
-    2)OUT – the value of an OUT parameter can be changed inside the stored procedure and its new value is passed back to the 
-    calling program. Notice that the stored procedure cannot access the initial value of the OUT parameter when it starts.
-    
-    3)INOUT – an INOUT  parameter is the combination of IN  and OUT  parameters. It means that the calling program may pass the 
-    argument, and the stored procedure can modify the INOUT parameter and pass the new value back to the calling program.
+1) ***IN*** – *is the default mode*. When you define an IN parameter in a stored procedure, the calling program has to pass an argument to the stored procedure. In addition, the value of an IN parameter is protected. It means that even the value of the IN parameter is changed inside the stored procedure, its original value is retained after the stored procedure ends. In other words, the stored procedure only works on the copy of the IN parameter.
+
+2)***OUT*** – the value of an OUT parameter can be changed inside the stored procedure and its new value is passed back to the 
+calling program. Notice that the stored procedure cannot access the initial value of the OUT parameter when it starts.
+
+3)***INOUT*** – an INOUT  parameter is the combination of IN  and OUT  parameters. It means that the calling program may pass the 
+argument, and the stored procedure can modify the INOUT parameter and pass the new value back to the calling program.
 
 The syntax of defining a parameter in the stored procedures is as follows:
+```mysql
 MODE param_name param_type(param_size)
+```
 
-    The MODE could be IN , OUT,,or INOUT , depending on the purpose of the parameter in the stored procedure.
-    The param_name is the name of the parameter. The name of the parameter must follow the naming rules of the column name in MySQL.
-    Followed the parameter name is its data type and size. Like a variable, the data type of the parameter can be any valid MySQL data type.
+The ** MODE could be IN , OUT,,or INOUT** , depending on the purpose of the parameter in the stored procedure.
+The param_name is the name of the parameter. The name of the parameter must follow the naming rules of the column name in MySQL.
+Followed the parameter name is its data type and size. Like a variable, the data type of the parameter can be any valid MySQL data type.
 
 ## Creating stored proceudre which accepts IN parameter as content word
 ```mysql
@@ -318,7 +317,6 @@ mysql> select @counter;
 +----------+
 1 row in set (0.00 sec)
 
-mysql> 
 mysql> call increment_counter(@counter, 3);
 Query OK, 0 rows affected (0.00 sec)
 
@@ -345,8 +343,7 @@ mysql> select @counter;
  ## MySQL Stored Procedures That Return Multiple Values
    
 
-To develop a stored procedure to return multiple values we need to use multiple out statements. In the below program we are returning
-shipped orders count, resolved orders count, cancelled orders count for given customer using stored procedure.
+To develop a stored procedure **to return multiple values we need to use multiple OUT statements**. In the below program we are returning shipped orders count, resolved orders count, cancelled orders count for given customer using stored procedure.
 
 ```mysql
 DELIMITER //
@@ -408,7 +405,6 @@ Query OK, 0 rows affected (0.00 sec)
 
 Query OK, 0 rows affected (0.01 sec)
 
-mysql> 
 mysql> select @shipped as shipped, @resolved as resolved, @cancelled as cancelled;
 +---------+----------+-----------+
 | shipped | resolved | cancelled |
