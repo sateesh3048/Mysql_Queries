@@ -1,12 +1,10 @@
 
 ## Definition of stored procedures
-=============================== :-
 
 A stored procedure is a group of SQL statements stored inside the database catalog. A stored procedure can be 
 invoked by triggers, other stored procedures, and applications such as Ruby, Java, Python, PHP.
 
 ## MySQL stored procedures advantages
-================================= :-
 
     1) Typically stored procedures help increase the performance of the applications. Once created, stored procedures are 
     compiled and stored in the database. However, MySQL implements the stored procedures slightly different. MySQL stored procedures 
@@ -24,7 +22,6 @@ invoked by triggers, other stored procedures, and applications such as Ruby, Jav
     stored procedures in the database without giving any permissions on the underlying database tables.
 
 ## MySQL stored procedures disadvantages
-======================================
 
     1) If you use many stored procedures, the memory usage of every connection that is using those stored procedures will increase 
     substantially. In addition, if you overuse a large number of logical operations inside store procedures, the CPU usage will also 
@@ -40,7 +37,6 @@ invoked by triggers, other stored procedures, and applications such as Ruby, Jav
     application development and maintenance phases.
 
 ## Creating simple stored procedure
-====================================
 
 ```mysql
     DELIMITER $$
