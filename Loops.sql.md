@@ -38,4 +38,33 @@ mysql> select @msg;
 +-----------------------+
 ```
 
+## REPEAT loop
+```mysql
+REPEAT
+ statements;
+UNTIL expression
+END REPEAT
+```
+## Example for Repeat loop
+
+```mysql
+DELIMITER $$
+DROP PROCEDURE SumOfNumbers $$
+create procedure SumOfNumbers(
+  IN MaxNumber int,
+  OUT Sum int)
+  BEGIN
+    DECLARE numVal int DEFAULT  1;
+    SET Sum = 0;
+    REPEAT
+      SET Sum = Sum + numVal;
+      SET numVal = numVal + 1;
+    UNTIL numVal > 10
+    END REPEAT;
+  END $$
+DELIMITER ;
+
+set @sum = 0; call SumOfNumbers(12, @sum);
+select @sum;
+```
 
