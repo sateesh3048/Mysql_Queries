@@ -461,7 +461,40 @@ mysql> select @customer_level;
 
 ```
 
+## Creating stored procedure using mysql case when statements
 
+```mysql
+DELIMITER $$
+DROP PROCEDURE getCustomerShippingDetails $$
+CREATE PROCEDURE getCustomerShippingDetails(
+  IN CustId int,
+  OUT ShippingDaysInfo VARCHAR(80))
+  BEGIN
+    DECLARE country_info varchar(255);
+    select country into country_info from customers
+    where customerNumber = CustId;
+    CASE country_info
+    WHEN "USA" THEN
+      SET ShippingDaysInfo = "Five Days";
+    WHEN "Australia" THEN
+      SET ShippingDaysInfo = "Three Days";
+    WHEN "Singapore" THEN
+      SET ShippingDaysInfo = "One Day";
+    ELSE
+      SET ShippingDaysInfo = "No Shipping Details";
+    END CASE;
+  END $$
+DELIMITER ;
+set @shipping_info=""; call  getCustomerShippingDetails(471, @shipping_info);
+mysql> select @shipping_info;
++----------------+
+| @shipping_info |
++----------------+
+| Three Days     |
++----------------+
+1 row in set (0.00 sec)
+
+```
 
 
 
