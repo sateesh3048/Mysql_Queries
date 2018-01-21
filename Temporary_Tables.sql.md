@@ -6,13 +6,13 @@ which you can reuse several times in a single session.
 
 ## A MySQL temporary table has the following specialized features:
 
-A temporary table is created by using **CREATE TEMPORARY TABLE** statement.
+* A temporary table is created by using **CREATE TEMPORARY TABLE** statement.
 Notice that the TEMPORARY keyword is added between CREATE and TABLE keywords.
 
-MySQL **removes the temporary table automatically when the session ends or the connection is terminated**. 
+* MySQL **removes the temporary table automatically when the session ends or the connection is terminated**. 
 Of course, you can use the  DROP TABLE statement to remove a temporary table explicitly when you are no longer use it.
 
-A temporary table is **only available and accessible to the client that creates it**. 
+* A temporary table is **only available and accessible to the client that creates it**. 
 Different clients **can create temporary tables with the same name without causing errors** because only the client that creates 
 the temporary table can see it. However, in the same session, two temporary tables cannot share the same name.
 
