@@ -26,6 +26,7 @@ The syntax of the COUNT function is as follows.
 
 ##Examples of count function
 
+```mysql
 To get total number of products in products table
 
 mysql> select count(*) from products;
@@ -53,10 +54,10 @@ mysql> select count(distinct customerNumber) from orders;
 |                             98 |
 +--------------------------------+
 1 row in set (0.00 sec)
-
+```
 
 ## Use of count function in Group by clause
-
+```mysql
 To find the number of products supplied by vendors, you use the following query:
 SELECT productvendor, count(*)
 FROM products
@@ -81,12 +82,12 @@ mysql> select productVendor, count(*) as total from products group by productVen
 +--------------------------+-------+
 | Carousel DieCast Legends |     9 |
 | Classic Metal Creations  |    10 |
-
+```
 ## MySQL COUNT IF
 
 You can **use a control flow function e.g., IF, IFNULL, CASE, etc.,** in the COUNT function to count rows whose 
 values match a condition.
-
+```mysql
 mysql> select count(if(status="Cancelled", status, null)) as cancelled, 
     -> count(if(status="On Hold", status, null)) as on_hold,
     -> count(if(status="Shipped", status, null)) as shipped from orders ;
@@ -97,3 +98,4 @@ mysql> select count(if(status="Cancelled", status, null)) as cancelled,
 +-----------+---------+---------+
 1 row in set, 313 warnings (0.00 sec)
 
+```
